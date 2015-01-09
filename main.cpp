@@ -1,7 +1,15 @@
-#include <omp.h>
 #include <iostream>
+#include "Population.h"
 
 int main() {
-    #pragma omp parallel
-    printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
+    const int GENERATION_NO = 10;
+
+    Population population;
+    for (int i = 0; i < GENERATION_NO; i++) {
+        Individual bestIndividual = population.oneGeneration();
+        std::cout << "Generation " << i << std::endl;
+        std::cout << "Best individual: " << bestIndividual.getX() << std::endl;
+        std::cout << "Best individual fitness: " << bestIndividual.getFitness() << std::endl;
+        std::cout << "================================" << std::endl;
+    }
 }
