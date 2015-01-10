@@ -9,12 +9,12 @@ Individual::Individual(double x) : x(x) {
 
 void Individual::calculateFitness() {
     double sumOfXSquare = 0;
-    for (int i = 1; i <= this->n; i++) {
+    for (int i = 1; i <= N; i++) {
         sumOfXSquare += x * x;
     }
 
     double productOfCosSequence = 1;
-    for (int i = 1; i <= this->n; i++) {
+    for (int i = 1; i <= N; i++) {
         productOfCosSequence *= std::cos(x/i);
     }
 
@@ -68,3 +68,5 @@ bool Individual::xIsInRange() {
     }
     return false;
 }
+
+int Individual::N = 3;

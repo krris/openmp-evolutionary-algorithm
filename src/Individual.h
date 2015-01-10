@@ -5,7 +5,6 @@
 
 class Individual {
 private:
-    static const int DEFAULT_N = 2;
     static constexpr double X_MIN = (- 40.0);
     static constexpr double X_MAX = 40.0;
 
@@ -14,11 +13,10 @@ private:
 
     double x;
     double fitness;
-    int n = DEFAULT_N;
-
     void calculateFitness();
 
 public:
+    static int N;
     Individual(double x);
 
     Individual crossover(const Individual & partner);
@@ -36,3 +34,4 @@ public:
 
     bool xIsInRange();
 };
+

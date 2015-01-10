@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Population.h"
-#include "Utils.h"
 
 int main(int argc, char* argv[]) {
 
@@ -8,6 +7,8 @@ int main(int argc, char* argv[]) {
     const int initialPopulationSize = atoi(argv[2]);
     const int tempPopulationSize = atoi(argv[3]);
     const float mutationRate = atof(argv[4]);
+    Individual::N = atoi(argv[5]);
+
 
     Population population(initialPopulationSize, tempPopulationSize, mutationRate);
     for (int i = 0; i < generationNo; i++) {
