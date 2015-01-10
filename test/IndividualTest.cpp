@@ -1,5 +1,5 @@
-#include <boost/test/minimal.hpp>
-#include "../Individual.h"
+//#include <boost/test/minimal.hpp>
+#include "../src/Individual.h"
 
 void calculateFitnessTest() {
     float expectedValue = 2;
