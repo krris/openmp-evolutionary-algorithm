@@ -6,9 +6,9 @@
 
 class Population {
 private:
-    const int INITIAL_POPULATION_SIZE = 5;
-    const int TEMPORARY_POPULATION_SIZE = 10;
-    const float MUTATION_RATE = 0.2f;
+    const int initialPopulationSize;
+    const int temporaryPopulationSize;
+    const float mutationRate;
 
     std::vector<Individual> population;
     std::vector<Individual> tempPopulationT;
@@ -21,7 +21,8 @@ private:
     void clearTemporaryPopulations();
 public:
 
-    Population();
+    Population(int const initialPopulationSize, int const temporaryPopulationSize, float const mutationRate);
+
     const float LOWER_BOUND = -40.0;
     const float UPPER_BOUND = 40.0;
 

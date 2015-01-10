@@ -2,12 +2,15 @@
 #include "Population.h"
 #include "Utils.h"
 
-int main() {
-    const int GENERATION_NO = 10;
+int main(int argc, char* argv[]) {
 
-    Population population;
-    for (int i = 0; i < GENERATION_NO; i++) {
-//        std::cout << Utils::getRandomInt(0,5) << std::endl;
+    const int generationNo = atoi(argv[1]);
+    const int initialPopulationSize = atoi(argv[2]);
+    const int tempPopulationSize = atoi(argv[3]);
+    const float mutationRate = atof(argv[4]);
+
+    Population population(initialPopulationSize, tempPopulationSize, mutationRate);
+    for (int i = 0; i < generationNo; i++) {
         Individual bestIndividual = population.oneGeneration();
         std::cout << "Generation " << i << std::endl;
         std::cout << "Best individual: " << bestIndividual.getX() << std::endl;
