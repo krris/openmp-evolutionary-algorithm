@@ -1,14 +1,17 @@
 #include <iostream>
 #include "Population.h"
+#include <omp.h>
 
 int main(int argc, char* argv[]) {
+
+    #pragma omp parallel
+    printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
 
     const int generationNo = atoi(argv[1]);
     const int initialPopulationSize = atoi(argv[2]);
     const int tempPopulationSize = atoi(argv[3]);
     const float mutationRate = atof(argv[4]);
     Individual::N = atoi(argv[5]);
-
 
     Population population(initialPopulationSize, tempPopulationSize, mutationRate);
     for (int i = 0; i < generationNo; i++) {
