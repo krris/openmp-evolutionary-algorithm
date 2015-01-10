@@ -44,19 +44,24 @@ Individual Individual::random() {
 Individual Individual::crossover(const Individual &partner) {
     float newX = partner.getX() + this->getX();
     if (newX == 0) {
+        printf("== newX = 0 (%f + %f)\n", this->getX(), partner.getX());
         return 0;
     }
+    newX /= 2;
 
-    return Individual(newX / 2);
+    printf("Crossover: %f + %f = %f\n", getX(), partner.getX(), newX);
+    return Individual(newX);
 }
 
 void Individual::mutate(float mutationRate) {
     float random = Utils::getRandomFloat(0.0, 1.0);
     if (random < mutationRate) {
+        printf("Mutation of %f - ", getX());
         do {
             float delta = Utils::getRandomFloat(-1.0, 1.0);
             x += delta;
         } while (!xIsInRange());
+        printf("new value: %f\n", getX());
     }
 }
 

@@ -8,13 +8,11 @@ class Population {
 private:
     const int INITIAL_POPULATION_SIZE = 5;
     const int TEMPORARY_POPULATION_SIZE = 10;
-    const float MUTATION_RATE = 1.0;
+    const float MUTATION_RATE = 0.2f;
 
     std::vector<Individual> population;
     std::vector<Individual> tempPopulationT;
     std::vector<Individual> tempPopulationR;
-
-    int getRandomInt(int min, int max);
 
     void initializePopulation();
     void createTemporaryPopulation();

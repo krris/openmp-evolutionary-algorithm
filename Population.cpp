@@ -1,8 +1,10 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
+#include <cassert>
 #include "Individual.h"
 #include "Population.h"
+#include "Utils.h"
 
 Population::Population() {
     initializePopulation();
@@ -33,20 +35,23 @@ void Population::initializePopulation() {
 
 void Population::createTemporaryPopulation() {
     for (int i = 0; i < TEMPORARY_POPULATION_SIZE; i++) {
-        int random = getRandomInt(0, INITIAL_POPULATION_SIZE - 1);
+        int random = Utils::getRandomInt(0, INITIAL_POPULATION_SIZE);
         this->tempPopulationT.push_back(population[random]);
     }
 }
 
 Individual Population::getBestIndividual() {
-    // TODO
+    std::sort(population.begin(), population.end());
+    return population[0];
 }
 
 void Population::crossoverAndMutation() {
+    assert(tempPopulationR.size() == 0);
+
     for (int i = 0; i < TEMPORARY_POPULATION_SIZE; i++) {
         // crossover
-        int a = getRandomInt(0, TEMPORARY_POPULATION_SIZE);
-        int b = getRandomInt(0, TEMPORARY_POPULATION_SIZE);
+        int a = Utils::getRandomInt(0, TEMPORARY_POPULATION_SIZE);
+        int b = Utils::getRandomInt(0, TEMPORARY_POPULATION_SIZE);
         Individual partnerA = tempPopulationT[a];
         Individual partnerB = tempPopulationT[b];
         Individual child = partnerA.crossover(partnerB);
@@ -65,16 +70,6 @@ void Population::naturalSelection() {
     for (int i = 0; i < INITIAL_POPULATION_SIZE; i++) {
         population[i] = tempPopulationR[i];
     }
-}
-
-int Population::getRandomInt(int min, int max) {
-    // Seed with a real random value, if available
-    std::random_device rd;
-
-    // Choose a random between min and max
-    std::default_random_engine e1(rd());
-    std::uniform_int_distribution<int> uniform_dist(min, max);
-    return uniform_dist(e1);
 }
 
 void Population::clearTemporaryPopulations() {
