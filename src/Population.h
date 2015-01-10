@@ -9,7 +9,7 @@ class Population {
 private:
     const int initialPopulationSize;
     const int temporaryPopulationSize;
-    const float mutationRate;
+    const double mutationRate;
 
     std::vector<Individual> population;
     std::vector<Individual> tempPopulationT;
@@ -22,12 +22,12 @@ private:
     void clearTemporaryPopulations();
 public:
 
-    Population(int const initialPopulationSize, int const temporaryPopulationSize, float const mutationRate);
+    Population(int const initialPopulationSize, int const temporaryPopulationSize, double const mutationRate);
 
-    const float LOWER_BOUND = -40.0;
-    const float UPPER_BOUND = 40.0;
+    const double LOWER_BOUND = -40.0;
+    const double UPPER_BOUND = 40.0;
 
-    static constexpr float EXPECTED_VALUE = 0.0;
+    static constexpr double EXPECTED_VALUE = 0.0;
 
     /* Returns best individual from one generation. */
     Individual oneGeneration();

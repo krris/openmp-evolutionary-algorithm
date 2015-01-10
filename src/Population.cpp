@@ -6,7 +6,7 @@
 #include "Population.h"
 #include "Utils.h"
 
-Population::Population(int const initialPopulationSize, int const temporaryPopulationSize, float const mutationRate)
+Population::Population(int const initialPopulationSize, int const temporaryPopulationSize, double const mutationRate)
         : initialPopulationSize(initialPopulationSize),
           temporaryPopulationSize(temporaryPopulationSize),
           mutationRate(mutationRate) {
@@ -14,7 +14,7 @@ Population::Population(int const initialPopulationSize, int const temporaryPopul
 }
 
 Individual Population::oneGeneration() {
-    std::cout << "Start of one generation" << std::endl;
+//    std::cout << "Start of one generation" << std::endl;
     this->print(population);
 
 
@@ -23,7 +23,7 @@ Individual Population::oneGeneration() {
     this->crossoverAndMutation();
     this->naturalSelection();
 
-    std::cout << "End of one generation" << std::endl;
+//    std::cout << "End of one generation" << std::endl;
     this->print(population);
 
     return this->getBestIndividual();

@@ -2,7 +2,7 @@
 
 class Utils {
 public:
-    static float getRandomFloat(float min, float max);
+    static double getRandomDouble(double min, double max);
     static int getRandomInt(int min, int max);
 };
 

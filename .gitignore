@@ -1,6 +1,9 @@
 # build
 build
 
+# Scons
+.sconsign.dblite
+
 # CLion
 .idea
 
