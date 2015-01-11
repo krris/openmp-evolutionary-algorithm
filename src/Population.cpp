@@ -16,7 +16,7 @@ Population::Population(int const initialPopulationSize, int const temporaryPopul
 
 Individual Population::oneGeneration() {
 //    LOG4CXX_DEBUG(Logger::getRootLogger(), "Start of one generation.");
-    this->print(population);
+//    this->print(population);
 
 
     this->clearTemporaryPopulations();
@@ -25,7 +25,7 @@ Individual Population::oneGeneration() {
     this->naturalSelection();
 
 //    LOG4CXX_DEBUG(Logger::getRootLogger(), "End of one generation.");
-    this->print(population);
+//    this->print(population);
 
     return this->getBestIndividual();
 

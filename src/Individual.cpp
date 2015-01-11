@@ -50,10 +50,12 @@ Individual Individual::crossover(const Individual &partner) {
 void Individual::mutate(double mutationRate) {
     double random = Utils::getRandomDouble(0.0, 1.0);
     if (random < mutationRate) {
-        do {
-            double delta = Utils::getRandomDouble(MUTATE_MIN_RANGE, MUTATE_MAX_RANGE);
+        double delta = Utils::getRandomDouble(0, MUTATE_MAX_RANGE);
+        if (x > 0) {
+            x -= delta;
+        } else {
             x += delta;
-        } while (!xIsInRange());
+        }
     }
 }
 
