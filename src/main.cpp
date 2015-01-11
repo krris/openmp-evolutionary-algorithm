@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Population.h"
-//#include <omp.h>
+#include <omp.h>
 //#include <log4cxx/basicconfigurator.h>
 
 //using namespace log4cxx;
@@ -9,8 +9,8 @@ int main(int argc, char* argv[]) {
 //    BasicConfigurator::configure();
 //    LOG4CXX_INFO(Logger::getRootLogger(), "Program started.");
 
-//    #pragma omp parallel
-//    printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
+    #pragma omp parallel
+    printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
 
     const int generationNo = atoi(argv[1]);
     const int initialPopulationSize = atoi(argv[2]);
