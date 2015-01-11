@@ -2,11 +2,11 @@
 
 #include <vector>
 #include <random>
-#include <log4cxx/logger.h>
+//#include <log4cxx/logger.h>
 #include "Individual.h"
 #include "Utils.h"
 
-using namespace log4cxx;
+//using namespace log4cxx;
 
 class Population {
 private:

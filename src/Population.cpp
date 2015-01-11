@@ -15,7 +15,7 @@ Population::Population(int const initialPopulationSize, int const temporaryPopul
 }
 
 Individual Population::oneGeneration() {
-    LOG4CXX_DEBUG(Logger::getRootLogger(), "Start of one generation.");
+//    LOG4CXX_DEBUG(Logger::getRootLogger(), "Start of one generation.");
     this->print(population);
 
 
@@ -24,7 +24,7 @@ Individual Population::oneGeneration() {
     this->crossoverAndMutation();
     this->naturalSelection();
 
-    LOG4CXX_DEBUG(Logger::getRootLogger(), "End of one generation.");
+//    LOG4CXX_DEBUG(Logger::getRootLogger(), "End of one generation.");
     this->print(population);
 
     return this->getBestIndividual();
@@ -83,7 +83,8 @@ void Population::clearTemporaryPopulations() {
 
 void Population::print(const std::vector<Individual>& population) {
     for (auto i : population) {
-        LOG4CXX_DEBUG(Logger::getRootLogger(), i.getX() << " [" << i.getFitness() << "], ");
-    }
+//        LOG4CXX_DEBUG(Logger::getRootLogger(), i.getX() << " [" << i.getFitness() << "], ");
+        std::cout << i.getX() << " [" << i.getFitness() << "], ";
+    } std::cout << std::endl;
 }
 

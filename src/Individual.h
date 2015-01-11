@@ -2,9 +2,9 @@
 
 #include <vector>
 #include <random>
-#include <log4cxx/logger.h>
+//#include <log4cxx/logger.h>
 
-using namespace log4cxx;
+//using namespace log4cxx;
 
 class Individual {
 private:
