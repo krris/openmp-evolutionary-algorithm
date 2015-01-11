@@ -2,8 +2,11 @@
 
 #include <vector>
 #include <random>
+#include <log4cxx/logger.h>
 #include "Individual.h"
 #include "Utils.h"
+
+using namespace log4cxx;
 
 class Population {
 private:
@@ -33,5 +36,5 @@ public:
     Individual oneGeneration();
 
     Individual getBestIndividual();
-    static void print(std::vector<Individual> population);
+    static void print(const std::vector<Individual>& population);
 };

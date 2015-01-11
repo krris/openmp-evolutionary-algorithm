@@ -1,6 +1,5 @@
 #include "Individual.h"
 #include "Population.h"
-#include "Utils.h"
 #include <iostream>
 
 Individual::Individual(double x) : x(x) {
@@ -41,24 +40,20 @@ Individual Individual::random() {
 Individual Individual::crossover(const Individual &partner) {
     double newX = partner.getX() + this->getX();
     if (newX == 0) {
-//        printf("== newX = 0 (%f + %f)\n", this->getX(), partner.getX());
         return 0;
     }
     newX /= 2;
 
-//    printf("Crossover: %f + %f = %f\n", getX(), partner.getX(), newX);
     return Individual(newX);
 }
 
 void Individual::mutate(double mutationRate) {
     double random = Utils::getRandomDouble(0.0, 1.0);
     if (random < mutationRate) {
-//        printf("Mutation of %f - ", getX());
         do {
             double delta = Utils::getRandomDouble(MUTATE_MIN_RANGE, MUTATE_MAX_RANGE);
             x += delta;
         } while (!xIsInRange());
-//        printf("new value: %f\n", getX());
     }
 }
 

@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <cassert>
+#include <string>
 #include "Individual.h"
 #include "Population.h"
 #include "Utils.h"
@@ -14,7 +15,7 @@ Population::Population(int const initialPopulationSize, int const temporaryPopul
 }
 
 Individual Population::oneGeneration() {
-//    std::cout << "Start of one generation" << std::endl;
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "Start of one generation.");
     this->print(population);
 
 
@@ -23,7 +24,7 @@ Individual Population::oneGeneration() {
     this->crossoverAndMutation();
     this->naturalSelection();
 
-//    std::cout << "End of one generation" << std::endl;
+    LOG4CXX_DEBUG(Logger::getRootLogger(), "End of one generation.");
     this->print(population);
 
     return this->getBestIndividual();
@@ -80,9 +81,9 @@ void Population::clearTemporaryPopulations() {
     this->tempPopulationR.clear();
 }
 
-void Population::print(std::vector<Individual> population) {
+void Population::print(const std::vector<Individual>& population) {
     for (auto i : population) {
-        std::cout << i.getX() << " [" << i.getFitness() << "], ";
-    } std::cout << std::endl;
+        LOG4CXX_DEBUG(Logger::getRootLogger(), i.getX() << " [" << i.getFitness() << "], ");
+    }
 }
 
