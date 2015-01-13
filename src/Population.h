@@ -15,14 +15,14 @@ private:
     const double mutationRate;
 
     std::vector<Individual> population;
-    std::vector<Individual> tempPopulationT;
-    std::vector<Individual> tempPopulationR;
+//    std::vector<Individual> tempPopulationT;
+//    std::vector<Individual> tempPopulationR;
 
     void initializePopulation();
-    void createTemporaryPopulation();
-    void crossoverAndMutation();
-    void naturalSelection();
-    void clearTemporaryPopulations();
+    std::vector<Individual> createTemporaryPopulation(std::vector<Individual>& fromPopulation);
+    //    void crossoverAndMutation();
+    std::vector<Individual> naturalSelection(std::vector<Individual> &populationA, std::vector<Individual> &populationB);
+//    void clearTemporaryPopulations();
     std::vector<Individual> crossover(std::vector<Individual>& population);
     std::vector<Individual> mutation(std::vector<Individual> population);
 
@@ -38,7 +38,7 @@ public:
     /* Returns best individual from one generation. */
     Individual oneGeneration();
 
-    Individual getBestIndividual(std::vector<Individual> &population);
+    Individual getBestIndividual(const std::vector<Individual> &population);
     static void print(const std::vector<Individual>& population);
 
 };

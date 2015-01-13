@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Population.h"
 #include <omp.h>
+double fit(double x, int N);
 
 int main(int argc, char* argv[]) {
     const int generationNo = atoi(argv[1]);
@@ -22,4 +23,22 @@ int main(int argc, char* argv[]) {
     std::cout << "Best individual fitness: " << bestIndividual.getFitness() << std::endl;
     std::cout << "================================" << std::endl;
 
+
+    printf("Fit = %f\n", fit(-0.188088, 10));
+}
+
+double fit(double x, int N) {
+    double sumOfXSquare = 0;
+    for (int i = 1; i <= N; i++) {
+        double result = x * x;
+        sumOfXSquare += result;
+    }
+
+    double productOfCosSequence = 1;
+    for (int j = 1; j <= N; j++) {
+        double cos = std::cos(x/j);
+        productOfCosSequence *= cos;
+    }
+
+    return  1/40 * sumOfXSquare + 1 - productOfCosSequence;
 }
