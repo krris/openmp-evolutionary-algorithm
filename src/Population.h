@@ -23,6 +23,9 @@ private:
     void crossoverAndMutation();
     void naturalSelection();
     void clearTemporaryPopulations();
+    std::vector<Individual> crossover(std::vector<Individual>& population);
+    std::vector<Individual> mutation(std::vector<Individual> population);
+
 public:
 
     Population(int const initialPopulationSize, int const temporaryPopulationSize, double const mutationRate);
@@ -38,7 +41,4 @@ public:
     Individual getBestIndividual();
     static void print(const std::vector<Individual>& population);
 
-    void crossover();
-
-    void mutation();
 };
