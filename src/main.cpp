@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     std::cout << "================================" << std::endl;
 
 
-    printf("Fit = %f\n", fit(-0.188088, 10));
+    printf("Fit = %f\n", fit(bestIndividual.getX(), Individual::N));
 }
 
 double fit(double x, int N) {

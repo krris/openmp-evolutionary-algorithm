@@ -16,13 +16,8 @@ Population::Population(int const initialPopulationSize, int const temporaryPopul
 }
 
 Individual Population::oneGeneration() {
-    printf("Befor crossover:\n");
-    print(this->population);
     std::vector<Individual> temporaryPopulation = this->crossover(this->population);
-    printf("After crossover:\n");
-    print(temporaryPopulation);
     temporaryPopulation = this->mutation(temporaryPopulation);
-    printf("Natural selection:\n");
     this->population = this->naturalSelection(this->population, temporaryPopulation);
 
     return this->getBestIndividual(this->population);
@@ -48,7 +43,7 @@ std::vector<Individual> Population::createTemporaryPopulation(std::vector<Indivi
 Individual Population::getBestIndividual(const std::vector<Individual> &population) {
     double sharedMinValue = std::numeric_limits<double>::max();
     Individual sharedBestIndividual = NULL;
-//    print(population);
+
     #pragma omp parallel
     {
         double minValue = std::numeric_limits<double>::max();
@@ -73,14 +68,10 @@ Individual Population::getBestIndividual(const std::vector<Individual> &populati
     }
 
     return sharedBestIndividual;
-
-//    std::max_element(population.begin(), population.end());
-//    std::sort(population.begin(), population.end());
-//    return population[0];
 }
 
 std::vector<Individual> Population::crossover(std::vector<Individual>& population) {
-
+    assert (population.size() > 0);
     const int size = temporaryPopulationSize;
     std::vector<Individual> tempPopulationT = createTemporaryPopulation(population);
     std::vector<Individual> tempPopulationR(size, NULL);
@@ -99,8 +90,6 @@ std::vector<Individual> Population::crossover(std::vector<Individual>& populatio
     }
 
     return tempPopulationR;
-//    printf("Test individual value = %f\n", tempPopulationR[0].getX());
-
 }
 
 std::vector<Individual> Population::mutation(std::vector<Individual> population) {
@@ -116,35 +105,14 @@ std::vector<Individual> Population::mutation(std::vector<Individual> population)
     return population;
 }
 
-//void Population::crossoverAndMutation() {
-//    assert(tempPopulationR.size() == 0);
-//
-//    for (int i = 0; i < temporaryPopulationSize; i++) {
-//        // crossover
-//        int a = Utils::getRandomInt(0, temporaryPopulationSize);
-//        int b = Utils::getRandomInt(0, temporaryPopulationSize);
-//        Individual partnerA = tempPopulationT[a];
-//        Individual partnerB = tempPopulationT[b];
-//        Individual child = partnerA.crossover(partnerB);
-//s
-//        // mutation
-//        child.mutate(mutationRate);
-//
-//        tempPopulationR.push_back(child);
-//    }
-//}
-
 std::vector<Individual> Population::naturalSelection(std::vector<Individual> &populationA, std::vector<Individual> &populationB) {
 
     std::vector<Individual> tempPopulation;
     tempPopulation.reserve(populationA.size() + populationB.size());
-    printf("Size: %d, ", tempPopulation.size());
     tempPopulation.insert(tempPopulation.end(), populationA.begin(), populationA.end());
     tempPopulation.insert(tempPopulation.end(), populationB.begin(), populationB.end());
-    printf("Size: %d\n", tempPopulation.size());
-    print(tempPopulation);
+
     std::sort(tempPopulation.begin(), tempPopulation.end());
-    print(tempPopulation);
 
     std::vector<Individual> selectedPopulation;
     selectedPopulation.reserve(initialPopulationSize);
@@ -153,11 +121,6 @@ std::vector<Individual> Population::naturalSelection(std::vector<Individual> &po
     }
     return selectedPopulation;
 }
-
-//void Population::clearTemporaryPopulations() {
-//    this->tempPopulationT.clear();
-//    this->tempPopulationR.clear();
-//}
 
 void Population::print(const std::vector<Individual>& population) {
     for (auto i : population) {
