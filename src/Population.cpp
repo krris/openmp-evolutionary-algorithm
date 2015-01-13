@@ -47,19 +47,19 @@ Individual Population::getBestIndividual() {
 
 std::vector<Individual> Population::crossover(std::vector<Individual>& population) {
 
-    std::vector<Individual> tempPopulationR;
-
     const int size = temporaryPopulationSize;
+    std::vector<Individual> tempPopulationR(size, NULL);
 
+    #pragma omp parallel for
     for (int i = 0; i < size; i++) {
-        // crossover
         int a = Utils::getRandomInt(0, size);
         int b = Utils::getRandomInt(0, size);
         Individual partnerA = population[a];
         Individual partnerB = population[b];
         Individual child = partnerA.crossover(partnerB);
 
-        tempPopulationR.push_back(child);
+        assert (i < size);
+        tempPopulationR[i] = child;
     }
 
     return tempPopulationR;
@@ -70,10 +70,13 @@ std::vector<Individual> Population::crossover(std::vector<Individual>& populatio
 std::vector<Individual> Population::mutation(std::vector<Individual> population) {
     const int size = temporaryPopulationSize;
 
+    #pragma omp parallel for default(none) shared(population)
     for (int i = 0; i < size; i++) {
+//        printf("i = %d [id: %d]\n", i, omp_get_thread_num());
         population[i].mutate(mutationRate);
     }
 
+//    printf("===============\n");
     return population;
 }
 
