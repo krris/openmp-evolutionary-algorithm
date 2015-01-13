@@ -37,4 +37,8 @@ public:
 
     Individual getBestIndividual();
     static void print(const std::vector<Individual>& population);
+
+    void crossover();
+
+    void mutation();
 };

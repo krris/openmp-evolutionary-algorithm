@@ -6,6 +6,7 @@
 #include "Individual.h"
 #include "Population.h"
 #include "Utils.h"
+#include <omp.h>
 
 Population::Population(int const initialPopulationSize, int const temporaryPopulationSize, double const mutationRate)
         : initialPopulationSize(initialPopulationSize),
@@ -17,7 +18,9 @@ Population::Population(int const initialPopulationSize, int const temporaryPopul
 Individual Population::oneGeneration() {
     this->clearTemporaryPopulations();
     this->createTemporaryPopulation();
-    this->crossoverAndMutation();
+    this->crossover();
+    this->mutation();
+//    this->crossoverAndMutation();
     this->naturalSelection();
 
     return this->getBestIndividual();
@@ -37,8 +40,39 @@ void Population::createTemporaryPopulation() {
 }
 
 Individual Population::getBestIndividual() {
+    // TODO do zrównoleglenia
     std::sort(population.begin(), population.end());
     return population[0];
+}
+
+void Population::crossover() {
+
+    assert(tempPopulationR.size() == 0);
+
+    std::vector<Individual> localTempPopulationR(this->tempPopulationR);
+    std::vector<Individual> localTempPopulationT(this->tempPopulationT);
+    int size = temporaryPopulationSize;
+
+    for (int i = 0; i < size; i++) {
+        // crossover
+        int a = Utils::getRandomInt(0, size);
+        int b = Utils::getRandomInt(0, size);
+        Individual partnerA = localTempPopulationT[a];
+        Individual partnerB = localTempPopulationT[b];
+        Individual child = partnerA.crossover(partnerB);
+
+        localTempPopulationR.push_back(child);
+    }
+    tempPopulationR = localTempPopulationR;
+//    printf("Test individual value = %f\n", tempPopulationR[0].getX());
+
+}
+
+void Population::mutation() {
+    for (int i = 0; i < temporaryPopulationSize; i++) {
+        tempPopulationR[i].mutate(mutationRate);
+//        printf("test: %f\n", tempPopulationR[i].getX());
+    }
 }
 
 void Population::crossoverAndMutation() {
