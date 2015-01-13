@@ -10,23 +10,14 @@ Individual::Individual(double x) : x(x) {
 void Individual::calculateFitness() {
 
     double sumOfXSquare = 0;
-//    #pragma omp parallel default(none) shared(N) private(i, x) \
-//        reduction(+ : sumOfXSquare)
-
-    int i;
-//    #pragma omp parallel for default(none) private(i) reduction(+:sumOfXSquare)
-    for (i = 1; i <= N; i++) {
+    for (int i = 1; i <= N; i++) {
         double result = x * x;
-//        #pragma omp atomic
         sumOfXSquare += result;
     }
 
-    int j;
     double productOfCosSequence = 1;
-//    #pragma omp parallel for default(none) private(j) reduction(*:productOfCosSequence)
-    for (j = 1; j <= N; j++) {
+    for (int j = 1; j <= N; j++) {
         double cos = std::cos(x/j);
-//        #pragma omp atomic
         productOfCosSequence *= cos;
     }
 
