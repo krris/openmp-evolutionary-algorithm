@@ -1,20 +1,33 @@
 #include "Individual.h"
 #include "Population.h"
 #include <iostream>
+#include <omp.h>
 
 Individual::Individual(double x) : x(x) {
     this->calculateFitness();
 }
 
 void Individual::calculateFitness() {
+
     double sumOfXSquare = 0;
-    for (int i = 1; i <= N; i++) {
-        sumOfXSquare += x * x;
+//    #pragma omp parallel default(none) shared(N) private(i, x) \
+//        reduction(+ : sumOfXSquare)
+
+    int i;
+//    #pragma omp parallel for default(none) private(i) reduction(+:sumOfXSquare)
+    for (i = 1; i <= N; i++) {
+        double result = x * x;
+//        #pragma omp atomic
+        sumOfXSquare += result;
     }
 
+    int j;
     double productOfCosSequence = 1;
-    for (int i = 1; i <= N; i++) {
-        productOfCosSequence *= std::cos(x/i);
+//    #pragma omp parallel for default(none) private(j) reduction(*:productOfCosSequence)
+    for (j = 1; j <= N; j++) {
+        double cos = std::cos(x/j);
+//        #pragma omp atomic
+        productOfCosSequence *= cos;
     }
 
     this->fitness = 1/40 * sumOfXSquare + 1 - productOfCosSequence;
