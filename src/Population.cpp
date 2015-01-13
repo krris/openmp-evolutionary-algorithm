@@ -23,7 +23,7 @@ Individual Population::oneGeneration() {
 //    this->crossoverAndMutation();
     this->naturalSelection();
 
-    return this->getBestIndividual();
+    return this->getBestIndividual(this->population);
 }
 
 void Population::initializePopulation() {
@@ -39,10 +39,38 @@ void Population::createTemporaryPopulation() {
     }
 }
 
-Individual Population::getBestIndividual() {
-    // TODO do zrównoleglenia
-    std::sort(population.begin(), population.end());
-    return population[0];
+Individual Population::getBestIndividual(std::vector<Individual> &population) {
+    double sharedMinValue = std::numeric_limits<double>::max();
+    Individual sharedBestIndividual = NULL;
+//    print(population);
+    #pragma omp parallel
+    {
+        double minValue = std::numeric_limits<double>::max();
+        Individual bestLocalIndividual = NULL;
+        #pragma omp for nowait
+        for(int i = 0; i < population.size(); i++){
+            double fitness = population[i].getFitness();
+            if (fitness < minValue) {
+                minValue = fitness;
+                bestLocalIndividual = population[i];
+            }
+        }
+
+        #pragma omp critical
+        {
+            if (minValue < sharedMinValue) {
+                sharedMinValue = minValue;
+                sharedBestIndividual = bestLocalIndividual;
+//                printf("Best ind: %f, fitness %f\n", sharedBestIndividual.getX(), sharedBestIndividual.getFitness());
+            }
+        }
+    }
+
+    return sharedBestIndividual;
+
+//    std::max_element(population.begin(), population.end());
+//    std::sort(population.begin(), population.end());
+//    return population[0];
 }
 
 std::vector<Individual> Population::crossover(std::vector<Individual>& population) {

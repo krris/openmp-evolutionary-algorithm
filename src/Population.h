@@ -38,7 +38,7 @@ public:
     /* Returns best individual from one generation. */
     Individual oneGeneration();
 
-    Individual getBestIndividual();
+    Individual getBestIndividual(std::vector<Individual> &population);
     static void print(const std::vector<Individual>& population);
 
 };
