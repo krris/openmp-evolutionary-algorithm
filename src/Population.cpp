@@ -24,7 +24,7 @@ Individual Population::oneGeneration() {
     temporaryPopulation = this->mutationParallel(temporaryPopulation);
     this->population = this->naturalSelection(this->population, temporaryPopulation);
 
-    return this->getBestIndividual(this->population);
+    return this->getBestIndividualParallel(this->population);
 }
 
 void Population::initializePopulation() {

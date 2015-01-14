@@ -53,9 +53,9 @@ Individual Individual::crossover(const Individual &partner) {
 }
 
 void Individual::mutate(double mutationRate) {
-    double random = Utils::getRandomDouble(0.0, 1.0);
+    double random = getRandomDouble(0.0, 1.0);
     if (random < mutationRate) {
-        double delta = Utils::getRandomDouble(0, MUTATE_MAX_RANGE);
+        double delta = getRandomDouble(0, MUTATE_MAX_RANGE);
         if (x > 0) {
             x -= delta;
         } else {
@@ -73,3 +73,10 @@ bool Individual::xIsInRange() {
 }
 
 int Individual::N = 3;
+
+double Individual::getRandomDouble(double min, double max) {
+    std::random_device randomDevice;
+    randomEngine.seed(randomDevice());
+    std::uniform_real_distribution<double> uniform_dist(min, max - 1);
+    return uniform_dist(randomEngine);
+}
