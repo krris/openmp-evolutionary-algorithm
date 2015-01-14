@@ -21,3 +21,19 @@ int Utils::getRandomInt(int min, int max) {
     std::uniform_int_distribution<int> uniform_dist(min, max - 1);
     return uniform_dist(e1);
 }
+
+double Utils::fit(double x, int N) {
+    double sumOfXSquare = 0;
+    for (int i = 1; i <= N; i++) {
+        double result = x * x;
+        sumOfXSquare += result;
+    }
+
+    double productOfCosSequence = 1;
+    for (int j = 1; j <= N; j++) {
+        double cos = std::cos(x/j);
+        productOfCosSequence *= cos;
+    }
+
+    return  1/40 * sumOfXSquare + 1 - productOfCosSequence;
+}

@@ -60,6 +60,7 @@ void Individual::mutate(double mutationRate) {
         } else {
             x += delta;
         }
+        calculateFitness();
     }
 }
 
