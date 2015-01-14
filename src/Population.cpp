@@ -146,6 +146,7 @@ std::vector<Individual> Population::mutationParallel(std::vector<Individual> pop
     const int size = temporaryPopulationSize;
     const double mutationRate = this->mutationRate;
 
+    #pragma omp parallel for
     for (int i = 0; i < size; i++) {
         population[i].mutate(mutationRate);
     }

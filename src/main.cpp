@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Population.h"
 #include <omp.h>
-//double fit(double x, int N);
 
 
 int main(int argc, char* argv[]) {
