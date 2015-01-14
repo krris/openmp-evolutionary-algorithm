@@ -16,13 +16,13 @@ Population::Population(int const initialPopulationSize, int const temporaryPopul
 }
 
 Individual Population::oneGeneration() {
-//    std::vector<Individual> temporaryPopulation = this->crossover(this->population);
-//    temporaryPopulation = this->mutation(temporaryPopulation);
-//    this->population = this->naturalSelection(this->population, temporaryPopulation);
-
-    std::vector<Individual> temporaryPopulation = this->crossoverParallel(this->population);
-    temporaryPopulation = this->mutationParallel(temporaryPopulation);
+    std::vector<Individual> temporaryPopulation = this->crossover(this->population);
+    temporaryPopulation = this->mutation(temporaryPopulation);
     this->population = this->naturalSelection(this->population, temporaryPopulation);
+
+//    std::vector<Individual> temporaryPopulation = this->crossoverParallel(this->population);
+//    temporaryPopulation = this->mutationParallel(temporaryPopulation);
+//    this->population = this->naturalSelection(this->population, temporaryPopulation);
 
     return this->getBestIndividual(this->population);
 }
