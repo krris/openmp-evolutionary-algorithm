@@ -45,6 +45,31 @@ std::vector<Individual> Population::createTemporaryPopulation(std::vector<Indivi
     return tempPopulation;
 }
 
+//std::vector<Individual> Population::createTemporaryPopulation(std::vector<Individual>& fromPopulation) {
+//    std::vector<Individual> tempPopulation;
+//    tempPopulation.reserve(temporaryPopulationSize);
+//
+//#pragma omp parallel
+//    {
+//        const int localTempPopulationSize = temporaryPopulationSize;
+//        const int localInitialPopulationSize = initialPopulationSize;
+//        std::vector<Individual> localPopulation = fromPopulation;
+//        std::vector<Individual> partialPopulation;
+//#pragma omp for nowait
+//        for (int i = 0; i < localTempPopulationSize; i++) {
+//            int random = getRandomInt(0, localInitialPopulationSize);
+//
+//            partialPopulation.push_back(localPopulation[random]);
+//        }
+//
+//#pragma omp critical
+//        {
+//            tempPopulation.insert(tempPopulation.end(), partialPopulation.begin(), partialPopulation.end());
+//        }
+//    }
+//    return tempPopulation;
+//}
+
 Individual Population::getBestIndividualParallel(const std::vector<Individual> &population) {
     double sharedMinValue = std::numeric_limits<double>::max();
     Individual sharedBestIndividual = NULL;

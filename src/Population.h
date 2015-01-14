@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <random>
-//#include <log4cxx/logger.h>
 #include "Individual.h"
 #include "Utils.h"
 

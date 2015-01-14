@@ -16,9 +16,8 @@ void Individual::calculateFitness() {
     for (int i = 1; i <= N; i++) {
         double result = x * x;
         sumOfXSquare += result;
-    }
-    for (int j = 1; j <= N; j++) {
-        double cos = std::cos(x/j);
+
+        double cos = std::cos(x/i);
         productOfCosSequence *= cos;
     }
 
