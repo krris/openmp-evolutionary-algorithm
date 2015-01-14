@@ -16,13 +16,13 @@ Population::Population(int const initialPopulationSize, int const temporaryPopul
 }
 
 Individual Population::oneGeneration() {
-    std::vector<Individual> temporaryPopulation = this->crossover(this->population);
-    temporaryPopulation = this->mutation(temporaryPopulation);
-    this->population = this->naturalSelection(this->population, temporaryPopulation);
-
-//    std::vector<Individual> temporaryPopulation = this->crossoverParallel(this->population);
-//    temporaryPopulation = this->mutationParallel(temporaryPopulation);
+//    std::vector<Individual> temporaryPopulation = this->crossover(this->population);
+//    temporaryPopulation = this->mutation(temporaryPopulation);
 //    this->population = this->naturalSelection(this->population, temporaryPopulation);
+
+    std::vector<Individual> temporaryPopulation = this->crossoverParallel(this->population);
+    temporaryPopulation = this->mutationParallel(temporaryPopulation);
+    this->population = this->naturalSelection(this->population, temporaryPopulation);
 
     return this->getBestIndividual(this->population);
 }
@@ -38,7 +38,7 @@ std::vector<Individual> Population::createTemporaryPopulation(std::vector<Indivi
     tempPopulation.reserve(temporaryPopulationSize);
 
     for (int i = 0; i < temporaryPopulationSize; i++) {
-        int random = Utils::getRandomInt(0, initialPopulationSize);
+        int random = getRandomInt(0, initialPopulationSize);
         tempPopulation.push_back(fromPopulation[random]);
     }
     return tempPopulation;
@@ -86,8 +86,8 @@ std::vector<Individual> Population::crossover(std::vector<Individual>& populatio
 
 //    #pragma omp parallel for
     for (int i = 0; i < size; i++) {
-        int a = Utils::getRandomInt(0, size);
-        int b = Utils::getRandomInt(0, size);
+        int a = getRandomInt(0, size);
+        int b = getRandomInt(0, size);
 //        printf("size = %d, popSize = %d\n", size, population.size());
         Individual partnerA = tempPopulationT[a];
         Individual partnerB = tempPopulationT[b];
@@ -109,8 +109,8 @@ std::vector<Individual> Population::crossoverParallel(std::vector<Individual> &p
 
 //    #pragma omp parallel for
     for (int i = 0; i < size; i++) {
-        int a = Utils::getRandomInt(0, size);
-        int b = Utils::getRandomInt(0, size);
+        int a = getRandomInt(0, size);
+        int b = getRandomInt(0, size);
 //        printf("size = %d, popSize = %d\n", size, population.size());
         Individual partnerA = tempPopulationT[a];
         Individual partnerB = tempPopulationT[b];
@@ -168,3 +168,8 @@ void Population::print(const std::vector<Individual>& population) {
 }
 
 
+int Population::getRandomInt(int min, int max) {
+    randomEngine.seed(randomDevice());
+    std::uniform_int_distribution<int> uniform_dist(min, max - 1);
+    return uniform_dist(randomEngine);
+}

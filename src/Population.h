@@ -14,19 +14,20 @@ private:
     const int temporaryPopulationSize;
     const double mutationRate;
 
+    std::random_device randomDevice;
+    std::default_random_engine randomEngine;
+
     std::vector<Individual> population;
-//    std::vector<Individual> tempPopulationT;
-//    std::vector<Individual> tempPopulationR;
 
     void initializePopulation();
     std::vector<Individual> createTemporaryPopulation(std::vector<Individual>& fromPopulation);
-    //    void crossoverAndMutation();
     std::vector<Individual> naturalSelection(std::vector<Individual> &populationA, std::vector<Individual> &populationB);
-//    void clearTemporaryPopulations();
     std::vector<Individual> crossover(std::vector<Individual>& population);
     std::vector<Individual> mutation(std::vector<Individual> population);
     std::vector<Individual> crossoverParallel(std::vector<Individual>& population);
     std::vector<Individual> mutationParallel(std::vector<Individual> population);
+
+    int getRandomInt(int min, int max);
 
 public:
 
