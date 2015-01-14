@@ -18,7 +18,6 @@ private:
     double x;
     double fitness;
     void calculateFitness();
-    std::default_random_engine randomEngine;
 
 public:
     static int N;

@@ -75,8 +75,9 @@ bool Individual::xIsInRange() {
 int Individual::N = 3;
 
 double Individual::getRandomDouble(double min, double max) {
-    std::random_device randomDevice;
-    randomEngine.seed(randomDevice());
+//    std::random_device randomDevice;
+//    randomEngine.seed(randomDevice());
+    std::default_random_engine randomEngine;
     std::uniform_real_distribution<double> uniform_dist(min, max - 1);
     return uniform_dist(randomEngine);
 }

@@ -21,11 +21,9 @@ int main(int argc, char* argv[]) {
     double delta = finish - start;
     printf("Time: %f\n", delta);
     std::cout << "Best individual: " << bestIndividual.getX() << std::endl;
-    std::cout << "Best individual fitness: " << bestIndividual.getFitness() << std::endl;
-    printf("Expected fitness = %f\n", Utils::fit(bestIndividual.getX(), Individual::N));
+    printf("Best fitness %.2e\n", bestIndividual.getFitness());
+    printf("Expected fitness = %.2e\n", Utils::fit(bestIndividual.getX(), Individual::N));
     std::cout << "================================" << std::endl;
-
-
 }
 
 

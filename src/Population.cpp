@@ -19,7 +19,8 @@ Individual Population::oneGeneration() {
 //    std::vector<Individual> temporaryPopulation = this->crossover(this->population);
 //    temporaryPopulation = this->mutation(temporaryPopulation);
 //    this->population = this->naturalSelection(this->population, temporaryPopulation);
-
+//
+//    return this->getBestIndividual(this->population);
     std::vector<Individual> temporaryPopulation = this->crossoverParallel(this->population);
     temporaryPopulation = this->mutationParallel(temporaryPopulation);
     this->population = this->naturalSelection(this->population, temporaryPopulation);
@@ -48,11 +49,11 @@ Individual Population::getBestIndividualParallel(const std::vector<Individual> &
     double sharedMinValue = std::numeric_limits<double>::max();
     Individual sharedBestIndividual = NULL;
 
-#pragma omp parallel
+    #pragma omp parallel
     {
         double minValue = std::numeric_limits<double>::max();
         Individual bestLocalIndividual = NULL;
-#pragma omp for nowait
+        #pragma omp for nowait
         for(int i = 0; i < population.size(); i++){
             double fitness = population[i].getFitness();
             if (fitness < minValue) {
@@ -61,7 +62,7 @@ Individual Population::getBestIndividualParallel(const std::vector<Individual> &
             }
         }
 
-#pragma omp critical
+        #pragma omp critical
         {
             if (minValue < sharedMinValue) {
                 sharedMinValue = minValue;
@@ -103,23 +104,31 @@ std::vector<Individual> Population::crossover(std::vector<Individual>& populatio
 
 std::vector<Individual> Population::crossoverParallel(std::vector<Individual> &population) {
     assert (population.size() > 0);
-    const int size = temporaryPopulationSize;
-    std::vector<Individual> tempPopulationT = createTemporaryPopulation(population);
-    std::vector<Individual> tempPopulationR(size, NULL);
 
-//    #pragma omp parallel for
-    for (int i = 0; i < size; i++) {
-        int a = getRandomInt(0, size);
-        int b = getRandomInt(0, size);
+    std::vector<Individual> tempPopulationR;
+    tempPopulationR.reserve(temporaryPopulationSize);
+
+    #pragma omp parallel
+    {
+        const int size = temporaryPopulationSize;
+        std::vector<Individual> tempPopulationT = createTemporaryPopulation(population);
+        std::vector<Individual> localPopulation;
+        localPopulation.reserve(size / omp_get_num_threads());
+
+        for (int i = omp_get_thread_num(); i < size; i += omp_get_num_threads()) {
+            int a = getRandomInt(0, size);
+            int b = getRandomInt(0, size);
 //        printf("size = %d, popSize = %d\n", size, population.size());
-        Individual partnerA = tempPopulationT[a];
-        Individual partnerB = tempPopulationT[b];
-        Individual child = partnerA.crossover(partnerB);
+            Individual partnerA = tempPopulationT[a];
+            Individual partnerB = tempPopulationT[b];
+            Individual child = partnerA.crossover(partnerB);
+            localPopulation.push_back(child);
+            assert (i < size);
+        }
 
-        assert (i < size);
-        tempPopulationR[i] = child;
+        #pragma omp critical
+        tempPopulationR.insert(tempPopulationR.end(), localPopulation.begin(), localPopulation.end());
     }
-
     return tempPopulationR;
 }
 
@@ -169,7 +178,8 @@ void Population::print(const std::vector<Individual>& population) {
 
 
 int Population::getRandomInt(int min, int max) {
-    randomEngine.seed(randomDevice());
+//    randomEngine.seed(randomDevice());
+    std::default_random_engine randomEngine;
     std::uniform_int_distribution<int> uniform_dist(min, max - 1);
     return uniform_dist(randomEngine);
 }

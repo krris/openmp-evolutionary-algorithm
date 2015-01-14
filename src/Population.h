@@ -14,8 +14,6 @@ private:
     const int temporaryPopulationSize;
     const double mutationRate;
 
-    std::random_device randomDevice;
-    std::default_random_engine randomEngine;
 
     std::vector<Individual> population;
 
