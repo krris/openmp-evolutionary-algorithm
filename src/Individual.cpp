@@ -8,14 +8,15 @@ Individual::Individual(double x) : x(x) {
 }
 
 void Individual::calculateFitness() {
+    int N = Individual::N;
 
     double sumOfXSquare = 0;
+    double productOfCosSequence = 1;
+
     for (int i = 1; i <= N; i++) {
         double result = x * x;
         sumOfXSquare += result;
     }
-
-    double productOfCosSequence = 1;
     for (int j = 1; j <= N; j++) {
         double cos = std::cos(x/j);
         productOfCosSequence *= cos;

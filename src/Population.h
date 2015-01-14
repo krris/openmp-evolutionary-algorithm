@@ -25,6 +25,8 @@ private:
 //    void clearTemporaryPopulations();
     std::vector<Individual> crossover(std::vector<Individual>& population);
     std::vector<Individual> mutation(std::vector<Individual> population);
+    std::vector<Individual> crossoverParallel(std::vector<Individual>& population);
+    std::vector<Individual> mutationParallel(std::vector<Individual> population);
 
 public:
 
@@ -39,6 +41,7 @@ public:
     Individual oneGeneration();
 
     Individual getBestIndividual(const std::vector<Individual> &population);
+    Individual getBestIndividualParallel(const std::vector<Individual> &population);
     static void print(const std::vector<Individual>& population);
 
 };
