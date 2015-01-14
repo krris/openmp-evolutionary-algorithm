@@ -62,7 +62,7 @@ Individual Population::getBestIndividual(const std::vector<Individual> &populati
             if (minValue < sharedMinValue) {
                 sharedMinValue = minValue;
                 sharedBestIndividual = bestLocalIndividual;
-                printf("Best ind: %f, fitness %f\n", sharedBestIndividual.getX(), sharedBestIndividual.getFitness());
+//                printf("Best ind: %f, fitness %f\n", sharedBestIndividual.getX(), sharedBestIndividual.getFitness());
             }
         }
     }
@@ -80,7 +80,7 @@ std::vector<Individual> Population::crossover(std::vector<Individual>& populatio
     for (int i = 0; i < size; i++) {
         int a = Utils::getRandomInt(0, size);
         int b = Utils::getRandomInt(0, size);
-        printf("size = %d, popSize = %d\n", size, population.size());
+//        printf("size = %d, popSize = %d\n", size, population.size());
         Individual partnerA = tempPopulationT[a];
         Individual partnerB = tempPopulationT[b];
         Individual child = partnerA.crossover(partnerB);

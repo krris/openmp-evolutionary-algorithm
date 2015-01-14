@@ -21,10 +21,10 @@ int main(int argc, char* argv[]) {
     printf("Time: %f\n", delta);
     std::cout << "Best individual: " << bestIndividual.getX() << std::endl;
     std::cout << "Best individual fitness: " << bestIndividual.getFitness() << std::endl;
+    printf("Expected fitness = %f\n", fit(bestIndividual.getX(), Individual::N));
     std::cout << "================================" << std::endl;
 
 
-    printf("Fit = %f\n", fit(bestIndividual.getX(), Individual::N));
 }
 
 double fit(double x, int N) {
