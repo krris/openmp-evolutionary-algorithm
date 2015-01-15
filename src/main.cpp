@@ -24,9 +24,8 @@ int main(int argc, char* argv[]) {
     double finish = omp_get_wtime();
     double delta = finish - start;
     printf("Time: %f\n", delta);
-    std::cout << "Best individual: " << bestIndividual.getX() << std::endl;
+    printf("Best individual: %.6f\n", bestIndividual.getX());
     printf("Best fitness %.2e\n", bestIndividual.getFitness());
-    printf("Expected fitness = %.2e\n", Utils::fit(bestIndividual.getX(), Individual::N));
     std::cout << "================================" << std::endl;
 }
 
