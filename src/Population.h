@@ -13,6 +13,7 @@ private:
     const int temporaryPopulationSize;
     const double mutationRate;
 
+    bool parallelVersion;
 
     std::vector<Individual> population;
 
@@ -28,7 +29,7 @@ private:
 
 public:
 
-    Population(int const initialPopulationSize, int const temporaryPopulationSize, double const mutationRate);
+    Population(int const initialPopulationSize, int const temporaryPopulationSize, float const mutationRate, bool parallel);
 
     const double LOWER_BOUND = -40.0;
     const double UPPER_BOUND = 40.0;

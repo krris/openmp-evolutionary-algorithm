@@ -8,23 +8,24 @@
 #include "Utils.h"
 #include <omp.h>
 
-Population::Population(int const initialPopulationSize, int const temporaryPopulationSize, double const mutationRate)
+Population::Population(int const initialPopulationSize, int const temporaryPopulationSize, float const mutationRate, bool b)
         : initialPopulationSize(initialPopulationSize),
           temporaryPopulationSize(temporaryPopulationSize),
-          mutationRate(mutationRate) {
+          mutationRate(mutationRate),
+          parallelVersion(b) {
     initializePopulation();
 }
 
 Individual Population::oneGeneration() {
-//    std::vector<Individual> temporaryPopulation = this->crossover(this->population);
-//    temporaryPopulation = this->mutation(temporaryPopulation);
-//    this->population = this->naturalSelection(this->population, temporaryPopulation);
-//
-//    return this->getBestIndividual(this->population);
+    if (!parallelVersion) {
+        std::vector<Individual> temporaryPopulation = this->crossover(this->population);
+        temporaryPopulation = this->mutation(temporaryPopulation);
+        this->population = this->naturalSelection(this->population, temporaryPopulation);
+        return this->getBestIndividual(this->population);
+    }
     std::vector<Individual> temporaryPopulation = this->crossoverParallel(this->population);
     temporaryPopulation = this->mutationParallel(temporaryPopulation);
     this->population = this->naturalSelection(this->population, temporaryPopulation);
-
     return this->getBestIndividualParallel(this->population);
 }
 
