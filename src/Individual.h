@@ -2,9 +2,6 @@
 
 #include <vector>
 #include <random>
-//#include <log4cxx/logger.h>
-
-//using namespace log4cxx;
 
 class Individual {
 private:
@@ -13,6 +10,7 @@ private:
 
     static constexpr double MUTATE_MIN_RANGE = -0.1;
     static constexpr double MUTATE_MAX_RANGE = 0.1;
+
 
     double x;
     double fitness;
@@ -35,6 +33,7 @@ public:
         return (getFitness() < other.getFitness());
     }
 
+    double getRandomDouble(double min, double max);
     bool xIsInRange();
 };
 

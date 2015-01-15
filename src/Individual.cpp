@@ -7,14 +7,17 @@ Individual::Individual(double x) : x(x) {
 }
 
 void Individual::calculateFitness() {
-    double sumOfXSquare = 0;
-    for (int i = 1; i <= N; i++) {
-        sumOfXSquare += x * x;
-    }
+    int N = Individual::N;
 
+    double sumOfXSquare = 0;
     double productOfCosSequence = 1;
+
     for (int i = 1; i <= N; i++) {
-        productOfCosSequence *= std::cos(x/i);
+        double result = x * x;
+        sumOfXSquare += result;
+
+        double cos = std::cos(x/i);
+        productOfCosSequence *= cos;
     }
 
     this->fitness = 1/40 * sumOfXSquare + 1 - productOfCosSequence;
@@ -48,12 +51,15 @@ Individual Individual::crossover(const Individual &partner) {
 }
 
 void Individual::mutate(double mutationRate) {
-    double random = Utils::getRandomDouble(0.0, 1.0);
+    double random = getRandomDouble(0.0, 1.0);
     if (random < mutationRate) {
-        do {
-            double delta = Utils::getRandomDouble(MUTATE_MIN_RANGE, MUTATE_MAX_RANGE);
+        double delta = getRandomDouble(0, MUTATE_MAX_RANGE);
+        if (x > 0) {
+            x -= delta;
+        } else {
             x += delta;
-        } while (!xIsInRange());
+        }
+        calculateFitness();
     }
 }
 
@@ -65,3 +71,9 @@ bool Individual::xIsInRange() {
 }
 
 int Individual::N = 3;
+
+double Individual::getRandomDouble(double min, double max) {
+    std::default_random_engine randomEngine;
+    std::uniform_real_distribution<double> uniform_dist(min, max - 1);
+    return uniform_dist(randomEngine);
+}

@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <random>
-//#include <log4cxx/logger.h>
 #include "Individual.h"
 #include "Utils.h"
 
@@ -14,18 +13,23 @@ private:
     const int temporaryPopulationSize;
     const double mutationRate;
 
+    bool parallelVersion;
+
     std::vector<Individual> population;
-    std::vector<Individual> tempPopulationT;
-    std::vector<Individual> tempPopulationR;
 
     void initializePopulation();
-    void createTemporaryPopulation();
-    void crossoverAndMutation();
-    void naturalSelection();
-    void clearTemporaryPopulations();
+    std::vector<Individual> createTemporaryPopulation(std::vector<Individual>& fromPopulation);
+    std::vector<Individual> naturalSelection(std::vector<Individual> &populationA, std::vector<Individual> &populationB);
+    std::vector<Individual> crossover(std::vector<Individual>& population);
+    std::vector<Individual> mutation(std::vector<Individual> population);
+    std::vector<Individual> crossoverParallel(std::vector<Individual>& population);
+    std::vector<Individual> mutationParallel(std::vector<Individual> population);
+
+    int getRandomInt(int min, int max);
+
 public:
 
-    Population(int const initialPopulationSize, int const temporaryPopulationSize, double const mutationRate);
+    Population(int const initialPopulationSize, int const temporaryPopulationSize, float const mutationRate, bool parallel);
 
     const double LOWER_BOUND = -40.0;
     const double UPPER_BOUND = 40.0;
@@ -35,6 +39,8 @@ public:
     /* Returns best individual from one generation. */
     Individual oneGeneration();
 
-    Individual getBestIndividual();
+    Individual getBestIndividual(const std::vector<Individual> &population);
+    Individual getBestIndividualParallel(const std::vector<Individual> &population);
     static void print(const std::vector<Individual>& population);
+
 };
