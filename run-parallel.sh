@@ -2,7 +2,7 @@
 
 delimiter="============================\n"
 
-generations=10
+generations=100
 initialPopulation=10000
 tempPopulation=20000
 title="Parallel version"
