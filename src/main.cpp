@@ -8,6 +8,12 @@ int main(int argc, char* argv[]) {
     const int initialPopulationSize = atoi(argv[2]);
     const int tempPopulationSize = atoi(argv[3]);
     const float mutationRate = atof(argv[4]);
+
+    printf("Generations: %d\n", generationNo);
+    printf("Initial population: %d\n", initialPopulationSize);
+    printf("Temp population: %d\n", tempPopulationSize);
+
+
     Individual::N = atoi(argv[5]);
     std::string parallelArg = argv[6];
     bool parallel = false;
@@ -23,10 +29,7 @@ int main(int argc, char* argv[]) {
     }
     double finish = omp_get_wtime();
     double delta = finish - start;
-    printf("Time: %f\n", delta);
-    printf("Best individual: %.6f\n", bestIndividual.getX());
-    printf("Best fitness %.2e\n", bestIndividual.getFitness());
-    std::cout << "================================" << std::endl;
+    printf("%f\n", delta);
 }
 
 
