@@ -1,0 +1,4 @@
+python run_all_and_store_in_excel.py przed_profilowaniem.xls before_profiling
+python run_all_and_store_in_excel.py po_profilowaniu.xls after_profiling
+python run_all_and_store_in_excel.py przed_profilowaniem_O3.xls before_profiling_O3
+python run_all_and_store_in_excel.py po_profilowaniu_O3.xls after_profiling_O3

@@ -23,7 +23,8 @@ Individual Population::oneGeneration() {
     std::vector<Individual> temporaryPopulation = this->crossoverParallel(this->population);
     temporaryPopulation = this->mutationParallel(temporaryPopulation);
     this->population = this->naturalSelection(this->population, temporaryPopulation);
-    return this->getBestIndividualParallel(this->population);
+    // return this->getBestIndividualParallel(this->population);
+    return this->getBestIndividual(this->population);
 }
 
 void Population::initializePopulation() {

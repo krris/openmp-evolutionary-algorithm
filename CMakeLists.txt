@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.4)
 
-set(NAME before_profiling)
+set(NAME after_profiling)
 project(${NAME})
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
